@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
             CrawlerDomainNamesSeeder::class,
             CrawlerParametersSeeder::class,
             CrawlerPathsSeeder::class,
-            CrawlerTopLevelDomainsSeeder::class
+            CrawlerTopLevelDomainsSeeder::class,
+            TasksSeeder::class
         ]);
     }
 }

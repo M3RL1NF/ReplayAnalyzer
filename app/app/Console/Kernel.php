@@ -4,6 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Schema;
+use App\Models\Task;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,7 +15,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\Crawler::class
     ];
 
     /**
@@ -24,7 +26,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        if (Schema::hasTable('tasks')) {
+            $tasks = Task::all();
+
+            if ($tasks) {
+                foreach ($tasks as $task) {
+                    if ($task->enabled) {
+                        $schedule->command($task->name)->cron($task->frequency);
+                    }
+                }
+            }
+        }
     }
 
     /**

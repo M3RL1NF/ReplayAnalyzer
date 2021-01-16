@@ -99,6 +99,11 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'crawler' => [
+            'driver' => 'monolog',
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
     ],
 
 ];

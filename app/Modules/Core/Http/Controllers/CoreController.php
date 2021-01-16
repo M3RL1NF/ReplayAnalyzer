@@ -14,6 +14,16 @@ class CoreController extends Controller
      */
     public function index()
     {
+        $dom = new \DOMDocument();
+
+        @$dom->loadHTMLFile('http://wotreplays.eu/site/5680469#stats');
+
+        $finder = new \DOMXPath($dom);
+
+        $spaner = $finder->query("//*[contains(@class, 'replay-stats__title')]");
+        
+        dd($spaner->item(0)->textContent);
+        
         return view('core::index');
     }
 
