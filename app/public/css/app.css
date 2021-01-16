@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);
+@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
 
 /*!
  * Bootstrap v4.5.3 (https://getbootstrap.com/)
@@ -70,13 +70,9 @@ body {
   font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.6;
-  color: #ffffff;
+  color: #212529;
   text-align: left;
-  background-color: rgba(7, 7, 7, 0.97);
-  background-image: url('/img/background3.jpg');
-  background-size: cover; /* Resize the background image to cover the entire container */
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-color: #f8fafc;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -10905,5 +10901,14 @@ a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6;
   }
+}
+
+body {
+  color: white !important;
+  background-color: black !important;
+  background-image: url("/img/background3.jpg") !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
 }
 

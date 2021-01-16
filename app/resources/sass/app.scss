@@ -6,3 +6,12 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+body {
+    color: white !important;
+    background-color: black !important;
+    background-image: url('/img/background3.jpg') !important;
+    background-size: cover !important; 
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+}

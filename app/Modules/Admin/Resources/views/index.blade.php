@@ -1,9 +1,9 @@
-@extends('admin::layouts.master')
+@extends('layouts.app')
 
 @section('content')
-    <h1>Hello World</h1>
+    <b-container>
+        <h1 class="mb-5">Einstellungen</h1>
 
-    <p>
-        This view is loaded from module: {!! config('admin.name') !!}
-    </p>
+        <settings-table/>
+    </b-container>
 @endsection
