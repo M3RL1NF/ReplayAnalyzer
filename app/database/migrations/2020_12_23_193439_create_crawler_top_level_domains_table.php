@@ -17,6 +17,7 @@ class CreateCrawlerTopLevelDomainsTable extends Migration
             $table->id();
             $table->foreignId('crawler_domain_name_id');
             $table->string('name');
+            $table->boolean('enabled');
             $table->timestamps();
         });
     }

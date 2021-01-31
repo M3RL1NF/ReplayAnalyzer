@@ -9,6 +9,7 @@ class CrawlerTopLevelDomain extends Model
     protected $fillable = [
         'crawler_domain_name_id',
         'name',
+        'enabled'
     ];
 
     public function crawlerDomainName()

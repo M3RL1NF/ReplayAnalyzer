@@ -20,10 +20,6 @@ class CrawlerParametersSeeder extends Seeder
                 'crawler_domain_name_id' => 1
             ],
             [
-                'name' => 'teams',
-                'crawler_domain_name_id' => 1
-            ],
-            [
                 'name' => 'details',
                 'crawler_domain_name_id' => 1
             ]

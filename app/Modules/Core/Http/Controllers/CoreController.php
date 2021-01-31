@@ -5,6 +5,7 @@ namespace Modules\Core\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Core\Services\CrawlerService;
 
 class CoreController extends Controller
 {
@@ -14,16 +15,7 @@ class CoreController extends Controller
      */
     public function index()
     {
-        $dom = new \DOMDocument();
-
-        @$dom->loadHTMLFile('http://wotreplays.eu/site/5680469#stats');
-
-        $finder = new \DOMXPath($dom);
-
-        $spaner = $finder->query("//*[contains(@class, 'replay-stats__title')]");
-        
-        dd($spaner->item(0)->textContent);
-        
+        dd(CrawlerService::handle());
         return view('core::index');
     }
 

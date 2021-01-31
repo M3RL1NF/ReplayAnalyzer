@@ -17,11 +17,13 @@ class CrawlerTopLevelDomainsSeeder extends Seeder
         DB::table('crawler_top_level_domains')->insert([
             [
                 'name' => 'eu',
-                'crawler_domain_name_id' => 1
+                'crawler_domain_name_id' => 1,
+                'enabled' => '0'
             ],
             [
                 'name' => 'ru',
-                'crawler_domain_name_id' => 1
+                'crawler_domain_name_id' => 1,
+                'enabled' => '0'
             ]
         ]);
     }
