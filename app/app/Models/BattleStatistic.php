@@ -9,6 +9,7 @@ class BattleStatistic extends Model
     protected $fillable = [
         'map_id',
         'battle_type_id',
+        'game_mode',
         'replay_number',
         'spawn',
         'result',

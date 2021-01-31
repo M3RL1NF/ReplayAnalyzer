@@ -24,11 +24,11 @@ class ReplayCrawlerService
         return $replayCrawlerUrls;
     }
 
-    public static function getStartingReplayNumber($region) 
+    public static function getReplayNumber($region) 
     {
         $battleStatistic = BattleStatistic::max('replay_number');
 
-        $startingReplayNumber = $battleStatistic ? $battleStatistic : config('wotreplays.replay_number_start.' . $region);
+        $startingReplayNumber = $battleStatistic ? $battleStatistic + 1 : config('wotreplays.replay_number_start.' . $region);
 
         return $startingReplayNumber;
     }

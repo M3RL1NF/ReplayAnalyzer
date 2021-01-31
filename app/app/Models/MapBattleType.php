@@ -6,10 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class MapBattleType extends Model
 {
+    public $table = 'maps_battle_types';
+
     protected $fillable = [
         'map_id',
         'battle_type_id'
     ];
+
+    public $timestamps = false;
 
     public function map()
     {

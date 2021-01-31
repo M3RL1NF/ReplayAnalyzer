@@ -17,10 +17,11 @@ class CreateBattleStatisticsTable extends Migration
             $table->id();
             $table->foreignId('map_id');
             $table->foreignId('battle_type_id');
+            $table->string('game_mode');
             $table->bigInteger('replay_number');
             $table->integer('spawn');
             $table->string('result');
-            $table->bigInteger('duration');
+            $table->string('duration');
             $table->timestamp('server_game_time');
             $table->string('patch');
             $table->string('region');
