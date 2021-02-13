@@ -26,7 +26,7 @@ class ReplayCrawlerService
 
     public static function getReplayNumber($region) 
     {
-        $battleStatistic = BattleStatistic::max('replay_number');
+        $battleStatistic = BattleStatistic::where('region', $region)->max('replay_number');
 
         $startingReplayNumber = $battleStatistic ? $battleStatistic + 1 : config('wotreplays.replay_number_start.' . $region);
 

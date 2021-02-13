@@ -15,15 +15,15 @@ class CreateBattleStatisticsTable extends Migration
     {
         Schema::create('battle_statistics', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('map_id');
-            $table->foreignId('battle_type_id');
-            $table->string('game_mode');
+            $table->foreignId('map_id')->nullable();
+            $table->foreignId('battle_type_id')->nullable();
+            $table->string('game_mode')->nullable();
             $table->bigInteger('replay_number');
-            $table->integer('spawn');
-            $table->string('result');
-            $table->string('duration');
-            $table->timestamp('server_game_time');
-            $table->string('patch');
+            $table->integer('spawn')->nullable();
+            $table->string('result')->nullable();
+            $table->string('duration')->nullable();
+            $table->timestamp('server_game_time')->nullable();
+            $table->string('patch')->nullable();
             $table->string('region');
             $table->timestamps();
         });

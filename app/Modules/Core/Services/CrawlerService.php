@@ -2,11 +2,12 @@
 
 namespace Modules\Core\Services;
 
-use Illuminate\Support\Facades\Log;
 use App\Models\BattleStatistic; 
 use App\Models\BattleType; 
 use App\Models\Map; 
 use App\Models\MapBattleType; 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Modules\Core\Services\ReplayCrawlerService;
 
 class CrawlerService
@@ -28,39 +29,37 @@ class CrawlerService
                 @$domDocument->loadHTMLFile($replayCrawlerUrls . '/' . $replayNumber . '#stats');
         
                 $domxPath = new \DOMXPath($domDocument);
-        
-                // get text content of website
-                $resultQuery                = $domxPath->query("//*[contains(@class, 'replay-stats__title')]");
-                $resultContent              = $resultQuery->item(0)->textContent;
-                $result                     = trim($resultContent);
 
-                $mapAndBattleTypeQuery      = $domxPath->query("//*[contains(@class, 'replay-stats__subtitle')]");
-                $mapAndBattleTypeContent    = $mapAndBattleTypeQuery->item(0)->textContent;
-                $mapAndBattleType           = trim($mapAndBattleTypeContent);
-
-                $spawnRawQuery              = $domxPath->query("//*[contains(@class, 'b-replay__img_wrap')]");
-                $spawnRawContent            = $spawnRawQuery->item(0)->textContent;
-                $spawnRaw                   = trim($spawnRawContent);
-
-                $replayInfoQuery            = $domxPath->query("//*[contains(@class, 'replay__info clearfix')]");
-                $replayInfoContent          = $replayInfoQuery->item(0)->textContent;
-                $replayInfo                 = trim($replayInfoContent);
-
-                $battleDurationRawQuery     = $domxPath->query("//*[contains(@class, 'replay-details__timings')]");
-                $battleDurationRawContent   = $battleDurationRawQuery->item(0)->textContent;
-                $battleDurationRaw          = trim($battleDurationRawContent);
-
-                // adjust raw text content
-                $map                = explode(' – ', $mapAndBattleType)[0];
-                $battleType         = explode(' – ', $mapAndBattleType)[1];
-                $spawnString        = explode(': ', $spawnRaw)[1];
-                $patch              = trim(explode('Server', trim(str_replace("\n", "", explode(':', $replayInfo)[1])))[0]);
-                $gameMode           = trim(explode('Battle type:', explode('Uploaded', $replayInfo)[0])[1]);
-                $battleDuration     = str_replace(' s', '', str_replace(' min ', ':', trim(explode('duration', trim(str_replace("\n", "", explode('Time', $battleDurationRaw)[1])))[1])));
-                $serverGameTime     = trim(explode('Spawn:', explode('time:', $replayInfo)[1])[0]);
-
-                $spawnString == 'I' ? $spawn = '1' : $spawn = '2';
+                $map            = null;
+                $battleType     = null;
+                $gameMode       = null;
+                $spawn          = null;
+                $result         = null;
+                $battleDuration = null;
+                $serverGameTime = null;
+                $patch          = null;
                 
+                if (count($domxPath->query("//*[contains(@class, 'replay-stats__title')]")) > 0) {
+                    // get text content of website
+                    $result             = trim($domxPath->query("//*[contains(@class, 'replay-stats__title')]")->item(0)->textContent);
+                    $mapAndBattleType   = trim($domxPath->query("//*[contains(@class, 'replay-stats__subtitle')]")->item(0)->textContent);
+                    $spawnRaw           = trim($domxPath->query("//*[contains(@class, 'b-replay__img_wrap')]")->item(0)->textContent);
+                    $replayInfo         = trim($domxPath->query("//*[contains(@class, 'replay__info clearfix')]")->item(0)->textContent);
+                    $battleDurationRaw  = trim($domxPath->query("//*[contains(@class, 'replay-details__timings')]")->item(0)->textContent);                
+
+                    // adjust raw text content
+                    $map                = explode(' – ', $mapAndBattleType)[0];
+                    $battleType         = explode(' – ', $mapAndBattleType)[1];
+                    $spawnString        = explode(': ', $spawnRaw)[1];
+                    $patch              = trim(explode('Server', trim(str_replace("\n", "", explode(':', $replayInfo)[1])))[0]);
+                    $gameMode           = trim(explode('Battle type:', explode('Uploaded', $replayInfo)[0])[1]);
+                    $duration           = str_replace(' s', '', str_replace(' min ', ':', trim(explode('duration', trim(str_replace("\n", "", explode('Time', $battleDurationRaw)[1])))[1])));
+                    $battleDuration     = str_pad(explode(':', $duration)[0], 2, '0', STR_PAD_LEFT) . ':' . str_pad(explode(':', $duration)[1], 2, '0', STR_PAD_LEFT);
+                    $serverGameTime     = Carbon::parse(trim(explode('Spawn:', explode('time:', $replayInfo)[1])[0]))->format('Y-m-d H:i:s');
+
+                    $spawnString == 'I' ? $spawn = '1' : $spawn = '2'; 
+                }
+
                 $battleStatistics[] = [
                     'map' => $map,
                     'battleType' => $battleType,
@@ -88,22 +87,27 @@ class CrawlerService
     {
         if ($battleStatistics) {
             foreach ($battleStatistics as $battleStatistic) {
-                $map = Map::firstOrCreate([
-                    'name' => $battleStatistic['map']
-                ]);
+                $map        = null;
+                $battleType = null;
 
-                $battleType = BattleType::firstOrCreate([
-                    'name' => $battleStatistic['battleType']
-                ]);
+                if ($battleStatistic['map']) {
+                    $map = Map::firstOrCreate([
+                        'name' => $battleStatistic['map']
+                    ]);
 
-                MapBattleType::firstOrCreate([
-                    'map_id' => $map->id,
-                    'battle_type_id' => $battleType->id
-                ]);
+                    $battleType = BattleType::firstOrCreate([
+                        'name' => $battleStatistic['battleType']
+                    ]);
+
+                    MapBattleType::firstOrCreate([
+                        'map_id' => $map->id,
+                        'battle_type_id' => $battleType->id
+                    ]);
+                }
 
                 BattleStatistic::create([
-                    'map_id'            => $map->id,
-                    'battle_type_id'    => $battleType->id,
+                    'map_id'            => $map->id ?? null,
+                    'battle_type_id'    => $battleType->id ?? null,
                     'game_mode'         => $battleStatistic['gameMode'],
                     'replay_number'     => $battleStatistic['replayNumber'],
                     'spawn'             => $battleStatistic['spawn'],

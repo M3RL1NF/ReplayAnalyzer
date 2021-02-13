@@ -16,7 +16,12 @@
     <body>
         <div id="app">
             <b-navbar toggleable="lg" type="dark">
-                
+                <b-navbar-brand href="{{ route('index') }}">
+                    <div style="width=100%;">
+                        <img width="10%" height="auto" src="{{ asset('img/icon.ico') }}">
+                        <img width="70%" height="auto" src="{{ asset('img/title.png') }}">
+                    </div>
+                </b-navbar-brand>
             </b-navbar>
 
             <main class="py-4">

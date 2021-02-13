@@ -15,7 +15,7 @@ class CoreController extends Controller
      */
     public function index()
     {
-        dd(CrawlerService::handle());
+        // CrawlerService::handle():
         return view('core::index');
     }
 
