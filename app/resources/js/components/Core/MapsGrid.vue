@@ -1,5 +1,9 @@
 <template>
-
+	<b-row>
+		<b-col cols="3" class="mt-4" v-for="map in maps" :key="map">
+			<b-img thumbnail fluid :src="getMapImage(map.name)" @click="getMap(map.id)"></b-img>
+		</b-col>
+	</b-row>
 </template>
 
 <script>
@@ -32,9 +36,8 @@
                         '/api/core/getMaps'
                     )
 					.then(data => {
-                        console.log('here');
-						if (data.data) {
-							this.maps = data.data.data;
+						if (data.data.maps) {
+							this.maps = data.data.maps;
 						}
 					})
 					.catch(error => {
@@ -42,11 +45,15 @@
 					});
 			},
 
-            /* getMap() {
+			getMapImage(mapName) {
+				return 'img/maps/' + mapName + '.jpg';
+			},
+
+            getMap(mapId) {
 				axios
-					.post(
-                        '/api/core/getMaps'
-                    )
+					.post('/api/core/getMaps', {
+						mapId: mapId
+					})
 					.then(data => {
 						if (data.data) {
 							this.maps = data.data.data;
@@ -55,7 +62,7 @@
 					.catch(error => {
 						console.error(error);
 					});
-			} */
+			}
 		}
 	}
 </script>

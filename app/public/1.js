@@ -13,6 +13,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -37,30 +41,29 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.post('/api/core/getMaps').then(function (data) {
-        console.log('here');
+        if (data.data.maps) {
+          _this.maps = data.data.maps;
+        }
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    },
+    getMapImage: function getMapImage(mapName) {
+      return 'img/maps/' + mapName + '.jpg';
+    },
+    getMap: function getMap(mapId) {
+      var _this2 = this;
 
+      axios.post('/api/core/getMaps', {
+        mapId: mapId
+      }).then(function (data) {
         if (data.data) {
-          _this.maps = data.data.data;
+          _this2.maps = data.data.data;
         }
       })["catch"](function (error) {
         console.error(error);
       });
     }
-    /* getMap() {
-    axios
-    .post(
-                '/api/core/getMaps'
-            )
-    .then(data => {
-    if (data.data) {
-    this.maps = data.data.data;
-    }
-    })
-    .catch(error => {
-    console.error(error);
-    });
-    } */
-
   }
 });
 
@@ -81,7 +84,27 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c(
+    "b-row",
+    _vm._l(_vm.maps, function(map) {
+      return _c(
+        "b-col",
+        { key: map, staticClass: "mt-4", attrs: { cols: "3" } },
+        [
+          _c("b-img", {
+            attrs: { thumbnail: "", fluid: "", src: _vm.getMapImage(map.name) },
+            on: {
+              click: function($event) {
+                return _vm.getMap(map.id)
+              }
+            }
+          })
+        ],
+        1
+      )
+    }),
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -206,15 +229,14 @@ function normalizeComponent (
 /*!***************************************************!*\
   !*** ./resources/js/components/Core/MapsGrid.vue ***!
   \***************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _MapsGrid_vue_vue_type_template_id_27a3e832___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MapsGrid.vue?vue&type=template&id=27a3e832& */ "./resources/js/components/Core/MapsGrid.vue?vue&type=template&id=27a3e832&");
 /* harmony import */ var _MapsGrid_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MapsGrid.vue?vue&type=script&lang=js& */ "./resources/js/components/Core/MapsGrid.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _MapsGrid_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _MapsGrid_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -244,7 +266,7 @@ component.options.__file = "resources/js/components/Core/MapsGrid.vue"
 /*!****************************************************************************!*\
   !*** ./resources/js/components/Core/MapsGrid.vue?vue&type=script&lang=js& ***!
   \****************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('core')->group(function () {
-    Route::post('/getMaps', 'API\MapsController@index');
+Route::prefix('core')->namespace('API')->group(function () {
+    Route::post('/getMaps', 'MapsController@index');
 });

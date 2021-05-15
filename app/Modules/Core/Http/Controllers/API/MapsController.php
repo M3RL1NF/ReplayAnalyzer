@@ -12,6 +12,8 @@ class MapsController extends Controller
 {
     public function index()
     {
-        return MapResource::collection(Map::orderByDesc('name')->all());
+        return response()->json([
+            'maps' => Map::orderBy('name')->get()
+        ]);
     }
 }

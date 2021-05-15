@@ -15,14 +15,18 @@
     </head>
     <body>
         <div id="app">
-            <b-navbar toggleable="lg" type="dark">
-                <b-navbar-brand href="{{ route('index') }}">
-                    <div style="width=100%;">
-                        <img width="10%" height="auto" src="{{ asset('img/icon.ico') }}">
-                        <img width="70%" height="auto" src="{{ asset('img/title.png') }}">
-                    </div>
-                </b-navbar-brand>
-            </b-navbar>
+            <b-container>
+                <h1 class="mt-3">
+                    <b-link href="{{ route('index') }}">
+                        <b>
+                            WORLD of TANKS - MAPS
+                        </b>
+                    </b-link>
+                </h1>
+            </b-container>
+
+            {{-- <img width="10%" height="auto" src="{{ asset('img/icon.ico') }}"> --}}
+            {{-- <img width="70%" height="auto" src="{{ asset('img/title.png') }}"> --}}
 
             <main class="py-4">
                 @yield('content')
