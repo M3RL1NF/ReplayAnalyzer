@@ -17,21 +17,74 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       maps: null,
-      map: null
+      map: null,
+      map_name: null,
+      selected_patch: null,
+      selected_game_mode: null
     };
-  },
-  watch: {
-    map: {
-      handler: function handler() {
-        if (map) {
-          this.getMap();
-        }
-      }
-    }
   },
   created: function created() {
     this.getMaps();
@@ -40,7 +93,7 @@ __webpack_require__.r(__webpack_exports__);
     getMaps: function getMaps() {
       var _this = this;
 
-      axios.post('/api/core/getMaps').then(function (data) {
+      axios.post('/api/core/get-maps').then(function (data) {
         if (data.data.maps) {
           _this.maps = data.data.maps;
         }
@@ -51,14 +104,15 @@ __webpack_require__.r(__webpack_exports__);
     getMapImage: function getMapImage(mapName) {
       return 'img/maps/' + mapName + '.jpg';
     },
-    getMap: function getMap(mapId) {
+    getMap: function getMap(map) {
       var _this2 = this;
 
-      axios.post('/api/core/getMaps', {
-        mapId: mapId
+      this.map_name = map.name;
+      axios.post('/api/core/get-map', {
+        mapId: map.id
       }).then(function (data) {
         if (data.data) {
-          _this2.maps = data.data.data;
+          _this2.map = data.data;
         }
       })["catch"](function (error) {
         console.error(error);
@@ -84,27 +138,205 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "b-row",
-    _vm._l(_vm.maps, function(map) {
-      return _c(
-        "b-col",
-        { key: map, staticClass: "mt-4", attrs: { cols: "3" } },
+  return !_vm.map
+    ? _c(
+        "div",
         [
-          _c("b-img", {
-            attrs: { thumbnail: "", fluid: "", src: _vm.getMapImage(map.name) },
-            on: {
-              click: function($event) {
-                return _vm.getMap(map.id)
-              }
-            }
-          })
+          _c(
+            "b-row",
+            _vm._l(_vm.maps, function(map, maps_index) {
+              return _c(
+                "b-col",
+                { key: maps_index, staticClass: "mt-4", attrs: { cols: "3" } },
+                [
+                  _c("b-img", {
+                    attrs: {
+                      thumbnail: "",
+                      fluid: "",
+                      src: _vm.getMapImage(map.name)
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.getMap(map)
+                      }
+                    }
+                  })
+                ],
+                1
+              )
+            }),
+            1
+          )
         ],
         1
       )
-    }),
-    1
-  )
+    : _c(
+        "div",
+        [
+          _c(
+            "b-row",
+            [_c("b-col", [_c("h2", [_vm._v(_vm._s(_vm.map_name))])])],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "b-row",
+            { staticClass: "mt-4" },
+            [
+              _c(
+                "b-col",
+                { attrs: { cols: "3" } },
+                [
+                  _c("b-img", {
+                    attrs: {
+                      thumbnail: "",
+                      fluid: "",
+                      src: _vm.getMapImage(_vm.map_name)
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "b-col",
+                { attrs: { cols: "3" } },
+                [
+                  _c(
+                    "b-form-select",
+                    {
+                      scopedSlots: _vm._u([
+                        {
+                          key: "first",
+                          fn: function() {
+                            return [
+                              _c(
+                                "b-form-select-option",
+                                { attrs: { value: null, disabled: "" } },
+                                [_vm._v("Patch")]
+                              )
+                            ]
+                          },
+                          proxy: true
+                        }
+                      ]),
+                      model: {
+                        value: _vm.selected_patch,
+                        callback: function($$v) {
+                          _vm.selected_patch = $$v
+                        },
+                        expression: "selected_patch"
+                      }
+                    },
+                    [
+                      _vm._v(" "),
+                      _vm._l(_vm.map, function(patch, map_index) {
+                        return _c(
+                          "b-form-select-option",
+                          { key: map_index, attrs: { value: patch } },
+                          [_vm._v(_vm._s(map_index))]
+                        )
+                      })
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-form-select",
+                    {
+                      staticClass: "mt-4",
+                      scopedSlots: _vm._u([
+                        {
+                          key: "first",
+                          fn: function() {
+                            return [
+                              _c(
+                                "b-form-select-option",
+                                { attrs: { value: null, disabled: "" } },
+                                [_vm._v("Game Mode")]
+                              )
+                            ]
+                          },
+                          proxy: true
+                        }
+                      ]),
+                      model: {
+                        value: _vm.selected_game_mode,
+                        callback: function($$v) {
+                          _vm.selected_game_mode = $$v
+                        },
+                        expression: "selected_game_mode"
+                      }
+                    },
+                    [
+                      _vm._v(" "),
+                      _vm._l(_vm.selected_patch, function(
+                        game_mode,
+                        game_mode_index
+                      ) {
+                        return _c(
+                          "b-form-select-option",
+                          {
+                            key: game_mode_index,
+                            attrs: { value: game_mode[0] }
+                          },
+                          [_vm._v(_vm._s(game_mode_index))]
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("b-col", { attrs: { cols: "3" } }, [
+                _c("p", [_vm._v("Battles evaluated:")]),
+                _vm._v(" "),
+                _c("p", [_vm._v("Avg Duration:")]),
+                _vm._v(" "),
+                _c("p", [_vm._v("Draws:")]),
+                _vm._v(" "),
+                _c("p", [_vm._v("Victorys Spawn 1:")]),
+                _vm._v(" "),
+                _c("p", [_vm._v("Victorys Spawn 2:")])
+              ]),
+              _vm._v(" "),
+              _vm.selected_patch && _vm.selected_game_mode
+                ? _c("b-col", { attrs: { cols: "3" } }, [
+                    _c("p", [_vm._v(_vm._s(_vm.selected_game_mode.games))]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v(_vm._s(_vm.selected_game_mode.duration))]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v(_vm._s(_vm.selected_game_mode.draws) + " %")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v(_vm._s(_vm.selected_game_mode.winsSpawn1) + " %")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v(_vm._s(_vm.selected_game_mode.winsSpawn2) + " %")
+                    ])
+                  ])
+                : _c("b-col", { attrs: { cols: "3" } }, [
+                    _c("p", [_vm._v("21.398")]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("06:46")]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("1,2 %")]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("51,3 %")]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("47,5 %")])
+                  ])
+            ],
+            1
+          )
+        ],
+        1
+      )
 }
 var staticRenderFns = []
 render._withStripped = true

@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('core')->namespace('API')->group(function () {
-    Route::post('/getMaps', 'MapsController@index');
+    Route::post('/get-maps', 'MapsController@getMaps');
+
+    Route::post('/get-map', 'MapsController@getMap');
 });
