@@ -74,13 +74,13 @@ class CrawlerService
                 ];
 
                 // random delay between calls
-                // sleep(rand($minDelay, $maxDelay));
+                sleep(rand($minDelay, $maxDelay));
             }
         }
 
         self::store($battleStatistics);
 
-        return view('core::index');
+        return true;
     }
 
     public static function store($battleStatistics = null) 

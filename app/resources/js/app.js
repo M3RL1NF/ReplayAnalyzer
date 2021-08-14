@@ -9,6 +9,12 @@ window.Vue = require('vue');
 
 import BootstrapVue from 'bootstrap-vue';
 
+import VueApexCharts from 'vue-apexcharts';
+
+Vue.use(VueApexCharts);
+
+Vue.component('apexchart', VueApexCharts);
+
 Vue.use(BootstrapVue);
 
 /**

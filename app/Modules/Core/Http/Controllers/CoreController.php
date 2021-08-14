@@ -19,6 +19,31 @@ class CoreController extends Controller
         return view('core::index');
     }
 
+    public function imprint()
+    {
+        return view('core::imprint');
+    }
+
+    public function privacyPolicy()
+    {
+        return view('core::privacy-policy');
+    }
+
+    public function contact()
+    {
+        return view('core::contact');
+    }
+
+    public function donations()
+    {
+        return view('core::donations');
+    }
+
+    public function info()
+    {
+        return view('core::info');
+    }
+
     /**
      * Show the form for creating a new resource.
      * @return Renderable

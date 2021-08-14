@@ -9,6 +9,8 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_apexcharts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-apexcharts */ "./node_modules/vue-apexcharts/dist/vue-apexcharts.js");
+/* harmony import */ var vue_apexcharts__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_apexcharts__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -76,7 +78,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    apexchart: vue_apexcharts__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
   data: function data() {
     return {
       maps: null,
@@ -88,6 +113,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.getMaps();
+  },
+  watch: {
+    selected_patch: function selected_patch() {
+      this.selected_game_mode = null;
+    }
   },
   methods: {
     getMaps: function getMaps() {
@@ -150,6 +180,7 @@ var render = function() {
                 { key: maps_index, staticClass: "mt-4", attrs: { cols: "3" } },
                 [
                   _c("b-img", {
+                    staticStyle: { cursor: "pointer" },
                     attrs: {
                       thumbnail: "",
                       fluid: "",
@@ -321,16 +352,58 @@ var render = function() {
                     ])
                   ])
                 : _c("b-col", { attrs: { cols: "3" } }, [
-                    _c("p", [_vm._v("21.398")]),
+                    _c("p", [_vm._v("-")]),
                     _vm._v(" "),
-                    _c("p", [_vm._v("06:46")]),
+                    _c("p", [_vm._v("-")]),
                     _vm._v(" "),
-                    _c("p", [_vm._v("1,2 %")]),
+                    _c("p", [_vm._v("-")]),
                     _vm._v(" "),
-                    _c("p", [_vm._v("51,3 %")]),
+                    _c("p", [_vm._v("-")]),
                     _vm._v(" "),
-                    _c("p", [_vm._v("47,5 %")])
+                    _c("p", [_vm._v("-")])
                   ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "b-row",
+            { staticClass: "mt-5" },
+            [_c("b-col", [_c("h3", [_vm._v("Details")])])],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "b-row",
+            { staticClass: "mt-2" },
+            [
+              _c("b-col", [
+                _c("h5", [_vm._v("Battle duration developement per patch:")])
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "b-row",
+            { staticClass: "mt-5" },
+            [
+              _c("b-col", [
+                _c(
+                  "div",
+                  [
+                    _c("apexchart", {
+                      attrs: {
+                        type: "line",
+                        height: "350",
+                        options: null,
+                        series: null
+                      }
+                    })
+                  ],
+                  1
+                )
+              ])
             ],
             1
           )

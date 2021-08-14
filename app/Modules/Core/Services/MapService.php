@@ -3,6 +3,7 @@
 namespace Modules\Core\Services;
 
 use App\Models\BattleStatistic;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -12,7 +13,7 @@ class MapService
     {
         $battleStatistics   = BattleStatistic::where('map_id', $request->input('mapId'))->get();
 
-        Log::info($request->input('mapId'));
+        // Log::info($request->input('mapId'));
 
         $patches            = self::getPatches($battleStatistics);
 
@@ -20,7 +21,7 @@ class MapService
 
         $battleResults      = self::getBattleResults($battleStatistics, $patches, $gameModes);
 
-        Log::info($battleResults);
+        // Log::info($battleResults);
 
         return $battleResults;
     }
@@ -56,6 +57,14 @@ class MapService
                 $battleStats            = $battleStatistics->where('patch', $patch)->where('game_mode', $gameMode);
 
                 if ($battleStats->count() > 0) {
+                    $durations          = [];
+
+                    $minutes            = [];
+
+                    $seconds            = [];
+
+                    $duration           = [];
+
                     $games              = $battleStats->count();
 
                     $draws              = $battleStats->where('result', 'Draw')->count();
@@ -70,14 +79,23 @@ class MapService
 
                     $winRateSpawn2      = number_format((float)(100 - $drawRate - $winRateSpawn1), 2, '.', '');
 
-                    $duration           = '???';
+                    foreach ($battleStats as $battleStat) {
+                        $durations[]    = $battleStat->duration;
+                    }
+
+                    foreach ($durations as $durationTime) {
+                        $minutes[]      = substr($durationTime, 0, 2);
+                        $seconds[]      = substr($durationTime, -2);
+                    }
+
+                    $duration           = (array_sum($minutes) * 60 + array_sum($seconds)) / $games;
 
                     $results[$patch][$gameMode][] = [
                         'games'         => $games,
                         'draws'         => $drawRate,
                         'winsSpawn1'    => $winRateSpawn1, 
                         'winsSpawn2'    => $winRateSpawn2,
-                        'duration'      => $duration
+                        'duration'      => gmdate("i:s", $duration)
                     ];
                 }
             }

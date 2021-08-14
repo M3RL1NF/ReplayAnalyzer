@@ -3,7 +3,7 @@
 	<div v-if="!map">
 		<b-row>
 			<b-col cols="3" class="mt-4" v-for="(map, maps_index) in maps" :key="maps_index">
-				<b-img thumbnail fluid :src="getMapImage(map.name)" @click="getMap(map)"></b-img>
+				<b-img thumbnail fluid :src="getMapImage(map.name)" @click="getMap(map)" style="cursor: pointer;"></b-img>
 			</b-col>
 		</b-row>
 	</div>
@@ -54,19 +54,44 @@
 			</b-col>
 
 			<b-col v-else cols="3">
-				<!-- -->
-				<p>21.398</p> 
-				<p>06:46</p> 
-				<p>1,2 %</p> 
-				<p>51,3 %</p> 
-				<p>47,5 %</p> 
+				<p>-</p> 
+				<p>-</p> 
+				<p>-</p> 
+				<p>-</p> 
+				<p>-</p> 
+			</b-col>
+		</b-row>
+
+		<b-row class="mt-5">
+			<b-col>
+				<h3>Details</h3>
+			</b-col>
+		</b-row>
+
+		<b-row class="mt-2">
+			<b-col>
+				<h5>Battle duration developement per patch:</h5>
+			</b-col>
+		</b-row>
+
+		<b-row class="mt-5"> 
+			<b-col>
+				<div>
+					<apexchart type="line" height="350" :options="null" :series="null"></apexchart>
+				</div>
 			</b-col>
 		</b-row>
 	</div>
 </template>
 
 <script>
+import VueApexCharts from 'vue-apexcharts';
+
     export default {
+		components: {
+			apexchart: VueApexCharts,
+        },
+
 		data: function () {
 			return {
 				maps: null,
@@ -79,6 +104,12 @@
 
         created() {
 			this.getMaps();
+		},
+
+		watch: {
+			selected_patch: function() {
+				this.selected_game_mode = null;
+			}
 		},
 
 		methods: {
