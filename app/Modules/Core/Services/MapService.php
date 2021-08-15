@@ -95,7 +95,8 @@ class MapService
                         'draws'         => $drawRate,
                         'winsSpawn1'    => $winRateSpawn1, 
                         'winsSpawn2'    => $winRateSpawn2,
-                        'duration'      => gmdate("i:s", $duration)
+                        'duration'      => gmdate("i:s", $duration),
+                        'durationChart' => number_format((float)($duration / 60), 2, '.', '') 
                     ];
                 }
             }

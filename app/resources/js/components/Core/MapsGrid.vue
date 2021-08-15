@@ -70,14 +70,14 @@
 
 		<b-row class="mt-2">
 			<b-col>
-				<h5>Battle duration developement per patch:</h5>
+				<h5>Random battle duration developement per patch:</h5>
 			</b-col>
 		</b-row>
 
 		<b-row class="mt-5"> 
 			<b-col>
 				<div>
-					<apexchart type="line" height="350" :options="null" :series="null"></apexchart>
+					<apexchart type="bar" height="350" :options="options" :series="series"></apexchart>
 				</div>
 			</b-col>
 		</b-row>
@@ -98,7 +98,25 @@ import VueApexCharts from 'vue-apexcharts';
 				map: null,
 				map_name: null,
 				selected_patch: null,
-				selected_game_mode: null
+				selected_game_mode: null,
+				options: {
+					chart: {
+							id: 'vuechart-example'
+						},
+						xaxis: {
+							categories: []
+						},
+						colors: [
+							'#ff5500'
+						],
+						theme: {
+							mode: 'dark'
+						}
+				},
+				series: [{
+					name: 'Duration in min',
+					data: []
+				}]
 			}
 		},
 
@@ -146,7 +164,18 @@ import VueApexCharts from 'vue-apexcharts';
 					})
 					.catch(error => {
 						console.error(error);
+					})
+					.finally(() => {
+						this.setChartData();
 					});
+			},
+
+			setChartData() {
+				_.each(this.map, (patch, index) => {
+					this.series[0].data.push(patch.Regular[0].durationChart);
+
+					this.options.xaxis.categories.push(index);
+				});
 			}
 		}
 	}

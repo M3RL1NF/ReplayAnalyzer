@@ -11,7 +11,9 @@
             Westerholtsweg 1A<br>
             26133 Oldenburg <br>
             <br>
-            merlin.fiedel@gmail.com
+            merlin.fiedel@gmail.com<br>
+            <br>
+            In-Game: K4VAX
         </p>
     </b-container>
 @endsection

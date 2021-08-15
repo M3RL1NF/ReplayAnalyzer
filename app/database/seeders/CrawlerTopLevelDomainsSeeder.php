@@ -18,7 +18,7 @@ class CrawlerTopLevelDomainsSeeder extends Seeder
             [
                 'name' => 'eu',
                 'crawler_domain_name_id' => 1,
-                'enabled' => '0'
+                'enabled' => '1'
             ],
             [
                 'name' => 'ru',

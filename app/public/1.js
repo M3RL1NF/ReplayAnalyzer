@@ -108,7 +108,23 @@ __webpack_require__.r(__webpack_exports__);
       map: null,
       map_name: null,
       selected_patch: null,
-      selected_game_mode: null
+      selected_game_mode: null,
+      options: {
+        chart: {
+          id: 'vuechart-example'
+        },
+        xaxis: {
+          categories: []
+        },
+        colors: ['#ff5500'],
+        theme: {
+          mode: 'dark'
+        }
+      },
+      series: [{
+        name: 'Duration in min',
+        data: []
+      }]
     };
   },
   created: function created() {
@@ -146,6 +162,17 @@ __webpack_require__.r(__webpack_exports__);
         }
       })["catch"](function (error) {
         console.error(error);
+      })["finally"](function () {
+        _this2.setChartData();
+      });
+    },
+    setChartData: function setChartData() {
+      var _this3 = this;
+
+      _.each(this.map, function (patch, index) {
+        _this3.series[0].data.push(patch.Regular[0].durationChart);
+
+        _this3.options.xaxis.categories.push(index);
       });
     }
   }
@@ -378,7 +405,9 @@ var render = function() {
             { staticClass: "mt-2" },
             [
               _c("b-col", [
-                _c("h5", [_vm._v("Battle duration developement per patch:")])
+                _c("h5", [
+                  _vm._v("Random battle duration developement per patch:")
+                ])
               ])
             ],
             1
@@ -394,10 +423,10 @@ var render = function() {
                   [
                     _c("apexchart", {
                       attrs: {
-                        type: "line",
+                        type: "bar",
                         height: "350",
-                        options: null,
-                        series: null
+                        options: _vm.options,
+                        series: _vm.series
                       }
                     })
                   ],
