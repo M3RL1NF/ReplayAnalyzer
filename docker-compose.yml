@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.3'
 
 networks:
   laravel:
@@ -28,7 +28,7 @@ services:
       - "3306:3306"
     environment:
       MYSQL_DATABASE: wotmapstatistics
-      MYSQL_USER: wotmapstatistics
+      MYSQL_USER: root
       MYSQL_PASSWORD: stat1sticaSupr3me
       MYSQL_ROOT_PASSWORD: stat1sticaSupr3me
       SERVICE_TAGS: dev
