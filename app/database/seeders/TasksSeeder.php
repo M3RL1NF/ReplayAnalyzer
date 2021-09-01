@@ -18,7 +18,7 @@ class TasksSeeder extends Seeder
             [
                 'name' => 'crawler',
                 'description' => 'Runs the crawler',
-                'frequency' => '*/5 * * * *',
+                'frequency' => '*/1 * * * *',
                 'enabled' => 1
             ]
         ]);
