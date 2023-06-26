@@ -1,5 +1,5 @@
 # wot-maps.com
-World of Tanks Replay Analyzer (Webcrawler)
+ World of Tanks Replay Analyzer (Webcrawler)
 
 A Laravel based Webcrawler for Replay and Statistics Analysis
 
