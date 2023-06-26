@@ -1,4 +1,4 @@
-# wot-maps.com
+# ReplayAnalyzer
 World of Tanks Replay Analyzer
 
 ## Info
