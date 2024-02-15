@@ -3,7 +3,7 @@ World of Tanks Replay Analyzer
 
 ## Info
 
-A Laravel based Webcrawler for Replay and Statistics Analysis.
+A Laravel based Webscraper for Replay and Statistics Analysis.
 
 ## Usage
 
